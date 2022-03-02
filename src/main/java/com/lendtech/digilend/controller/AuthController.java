@@ -13,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,14 +42,16 @@ public class AuthController {
 	UserRepository userRepository;
 	@Autowired
 	RoleRepository roleRepository;
+
 	@Autowired
 	PasswordEncoder encoder;
+
 	@Autowired
 	JwtUtils jwtUtils;
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		System.out.println(
-				loginRequest.getEmail() + "----" + new BCryptPasswordEncoder().encode(loginRequest.getPassword()));
+//		System.out.println(
+//				loginRequest.getEmail() + "----" + new BCryptPasswordEncoder().encode(loginRequest.getPassword()));
 
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));

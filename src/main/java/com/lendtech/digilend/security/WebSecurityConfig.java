@@ -59,7 +59,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+
 	}
+
+//	@Bean
+//	public static NoOpPasswordEncoder PEncoder() {
+//		return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+//	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

@@ -22,21 +22,26 @@ public class UserDetailsImpl implements UserDetails {
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, int idno, String memberno, String password,
-			Collection<? extends GrantedAuthority> authorities, String email) {
+	public UserDetailsImpl(Long id, String email, String password, Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
-		this.idno = idno;
 		this.email = email;
-		this.memberno = memberno;
 		this.password = password;
 		this.authorities = authorities;
 	}
 
 	public static UserDetailsImpl build(User user) {
+//		List<GrantedAuthority> authorities = user.getRoles().stream()
+//				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
+//		
+//		return new UserDetailsImpl(user.getId(), user.getId_no(), user.getEmail(), user.getMember_no(), authorities,
+//				user.getPassword());
+
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
-		return new UserDetailsImpl(user.getId(), user.getId_no(), user.getEmail(), user.getMember_no(), authorities,
-				user.getPassword());
+
+		System.out
+				.println(user.getId() + "____" + user.getEmail() + "____" + user.getPassword() + "____" + authorities);
+		return new UserDetailsImpl(user.getId(), user.getEmail(), user.getPassword(), authorities);
 	}
 
 	@Override
@@ -57,10 +62,6 @@ public class UserDetailsImpl implements UserDetails {
 		return password;
 	}
 
-
-	public String getMemberNo() {
-		return memberno;
-	}
 
 	public String getEmail() {
 		return email;
@@ -99,14 +100,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return email;
 	}
 
-
-
-//	public String getEmail() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 }
